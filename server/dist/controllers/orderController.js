@@ -21,7 +21,6 @@ class OrderController {
         this.createOrder = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { cart, paymentMethod, itemsPrice, shippingPrice, taxPrice, totalPrice, fullName, address, city, country, postalCode, } = req.body;
             const orderItems = cart.map((item) => (Object.assign(Object.assign({}, item), { product: item._id })));
-            const seller = orderItems.map((item) => item === null || item === void 0 ? void 0 : item.seller);
             const shippingAddress = {
                 fullName,
                 address,
@@ -41,7 +40,6 @@ class OrderController {
                 totalPrice,
                 itemsPrice,
                 user: userDoc,
-                seller,
             });
             try {
                 const createdOrder = yield newOrder.save();
@@ -77,7 +75,6 @@ class OrderController {
             const { id } = req.params;
             try {
                 const order = yield orderModel_1.default.findById(id).populate("user", "email name");
-                console.log(order, "order>>>>>>>>>>>>>");
                 if (!order) {
                     return res.status(400).send("Order not updated");
                 }

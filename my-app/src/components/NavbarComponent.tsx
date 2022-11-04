@@ -113,16 +113,6 @@ const NavbarComponent = () => {
                   </>
                 </NavDropdown>
 
-                {user && user.isSeller && (
-                  <NavDropdown id="basic-nav-dropdown" title="Seller">
-                    <LinkContainer to="/productList/seller">
-                      <NavDropdown.Item>Products List</NavDropdown.Item>
-                    </LinkContainer>{" "}
-                    <LinkContainer to="/orderList/seller">
-                      <NavDropdown.Item>Orders List</NavDropdown.Item>
-                    </LinkContainer>
-                  </NavDropdown>
-                )}
 
                 {user && user.isAdmin && (
                   <NavDropdown id="basic-nav-dropdown" title="GOD_MODE">

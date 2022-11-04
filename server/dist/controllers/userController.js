@@ -51,8 +51,6 @@ class UserController {
                     email: candidate.email,
                     isAdmin: candidate.isAdmin,
                     token,
-                    isSeller: candidate.isSeller,
-                    seller: Object.assign({}, candidate.seller)
                 };
                 res.status(200).json(resp);
             }
@@ -106,7 +104,6 @@ class UserController {
                     email: user.email,
                     isAdmin: user.isAdmin,
                     token,
-                    isSeller: user.isSeller,
                 };
                 res.status(200).json(resp);
             }
@@ -120,7 +117,7 @@ class UserController {
         this.updateUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
             var _a;
             const userId = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(" ")[2];
-            const { name, email, password, seller } = req.body;
+            const { name, email, password } = req.body;
             if (!name && !email) {
                 return res.status(400).send({
                     message: "Invalid/Empty Email ",
@@ -141,7 +138,6 @@ class UserController {
                     name,
                     email,
                     password: password !== '' ? hashedPassword : userToUpdate.password,
-                    seller: seller && Object.assign({}, seller),
                 }, { new: true });
                 if (!updatedUser) {
                     return res
@@ -156,7 +152,6 @@ class UserController {
                     email: updatedUser.email,
                     isAdmin: updatedUser.isAdmin,
                     token,
-                    isSeller: updatedUser.isSeller,
                 };
                 console.log(resp);
                 res.status(200).json(resp);

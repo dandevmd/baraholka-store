@@ -26,7 +26,6 @@ class OrderController {
       product: item._id,
     }));
 
-    const seller = orderItems.map((item: CartItem) => item?.seller);
 
     const shippingAddress = {
       fullName,
@@ -49,7 +48,6 @@ class OrderController {
       totalPrice,
       itemsPrice,
       user: userDoc,
-      seller,
     });
 
     try {
@@ -89,7 +87,6 @@ class OrderController {
         "user",
         "email name"
       );
-      console.log(order, "order>>>>>>>>>>>>>");
       if (!order) {
         return res.status(400).send("Order not updated");
       }

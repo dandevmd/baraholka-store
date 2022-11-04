@@ -31,7 +31,7 @@ const AdminOrdersListPage = () => {
         {
           headers: {
             Authorization:
-              user && `Bearer ${user.token} ${user._id} ${user.isAdmin} ${location.pathname === '/orderList/seller' ? user.isSeller : ''}`,
+              user && `Bearer ${user.token} ${user._id} ${user.isAdmin} `,
           },
         }
       );

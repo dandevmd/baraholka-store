@@ -9,6 +9,6 @@ productRouter.get("/slug/:slug", productController_1.productController.getProduc
 productRouter.get("/categories", productController_1.productController.getProductCategories);
 productRouter.get("/category/:category", productController_1.productController.getProductsByCategory);
 productRouter.get("/search", productController_1.productController.getProductByQuery);
-productRouter.get("/:id", isAuth_1.verifyToken, isAuth_1.verifySeller || isAuth_1.verifyAdmin, productController_1.productController.getProductById);
+productRouter.get("/:id", isAuth_1.verifyToken, isAuth_1.verifyAdmin, productController_1.productController.getProductById);
 productRouter.post("/:id/reviews", isAuth_1.verifyToken, productController_1.productController.createProductReview);
 exports.default = productRouter;

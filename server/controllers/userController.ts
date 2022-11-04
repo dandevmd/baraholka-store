@@ -40,8 +40,7 @@ class UserController {
         email: candidate.email,
         isAdmin: candidate.isAdmin,
         token,
-        isSeller: candidate.isSeller,
-        seller: {...candidate.seller}
+      
       };
       res.status(200).json(resp);
     } catch (error) {
@@ -98,7 +97,6 @@ class UserController {
         email: user.email,
         isAdmin: user.isAdmin,
         token,
-        isSeller: user.isSeller,
       };
 
       res.status(200).json(resp);
@@ -112,7 +110,7 @@ class UserController {
 
   updateUser = async (req: Request, res: Response) => {
     const userId = req.headers.authorization?.split(" ")[2];
-    const { name, email, password, seller } = req.body;
+    const { name, email, password } = req.body;
     if (!name && !email) {
       return res.status(400).send({
         message: "Invalid/Empty Email ",
@@ -136,7 +134,7 @@ class UserController {
           name,
           email,
           password: password !== '' ? hashedPassword : userToUpdate.password,
-          seller: seller && { ...seller },
+  
         },
         { new: true }
       );
@@ -154,7 +152,6 @@ class UserController {
         email: updatedUser.email,
         isAdmin: updatedUser.isAdmin,
         token,
-        isSeller: updatedUser.isSeller,
       };
       console.log(resp);
       res.status(200).json(resp);

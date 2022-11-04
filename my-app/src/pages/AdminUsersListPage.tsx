@@ -13,7 +13,7 @@ const AdminUsersListPage = () => {
   const [usersState, setUsersState] = useState({
     users: [] as User[],
     countUsers: 0,
-    pages: 0,
+    pages: 1,
   });
   const location = useLocation();
   const sp = new URLSearchParams(location.search);
@@ -81,6 +81,7 @@ const AdminUsersListPage = () => {
     }
     setLoading(false);
   };
+
 
   return (
     <>

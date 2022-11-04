@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { adminController } from "../controllers/adminController";
-import { verifyToken, verifyAdmin, verifySeller } from "../middlewares/isAuth";
+import { verifyToken, verifyAdmin } from "../middlewares/isAuth";
 
 const adminRouter: Router = Router();
 
@@ -8,13 +8,13 @@ adminRouter.get("/stats", verifyToken, verifyAdmin, adminController.getStats);
 adminRouter.get(
   "/productsList",
   verifyToken,
-  verifyAdmin || verifySeller,
+  verifyAdmin,
   adminController.getProductList
 );
 adminRouter.get(
   "/ordersList",
   verifyToken,
-  verifyAdmin || verifySeller,
+  verifyAdmin,
   adminController.getOrdersList
 );
 adminRouter.get(
@@ -32,13 +32,13 @@ adminRouter.get(
 adminRouter.post(
   "/createProduct",
   verifyToken,
-  verifySeller || verifyAdmin,
+  verifyAdmin,
   adminController.createNewProduct
 );
 adminRouter.put(
   "/editProduct/:id",
   verifyToken,
-  verifyAdmin || verifySeller,
+  verifyAdmin,
   adminController.editProduct
 );
 adminRouter.put(
@@ -56,7 +56,7 @@ adminRouter.put(
 adminRouter.delete(
   "/deleteProduct",
   verifyToken,
-  verifySeller || verifyAdmin,
+  verifyAdmin,
   adminController.deleteProduct
 );
 adminRouter.delete(

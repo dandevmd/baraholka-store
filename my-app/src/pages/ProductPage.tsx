@@ -26,7 +26,6 @@ const Product = () => {
     _id: "",
     name: "",
     slug: "",
-    seller: "",
     price: 0,
     image: "",
     images: [] as string[],
@@ -57,7 +56,6 @@ const Product = () => {
       setProduct({
         _id: data._id,
         name: data.name,
-        seller: data.seller,
         slug: data.slug,
         price: data.price,
         image: data.image,

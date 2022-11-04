@@ -76,24 +76,9 @@ class AdminController {
 
   getProductList = async (req: Request, res: Response) => {
     try {
-      const sellerId = req.headers.authorization?.split(" ")[2];
-      const sellerStatus = req.headers.authorization?.split(" ")[4];
       const query = req.query;
       const page = Number(query.page) || 1;
       const pageSize = Number(query.pageSize) || 3;
-
-      if (sellerStatus) {
-        const count = await ProductModel.countDocuments({ seller: sellerId });
-        const products = await ProductModel.find({ seller: sellerId });
-        return products.length > 0
-          ? res.status(200).send({
-              products,
-              countDocuments: count,
-              page,
-              pages: Math.ceil(products.length / pageSize),
-            })
-          : res.status(400).send("This seller has no products");
-      }
 
       const products = await ProductModel.find()
         .skip(pageSize * (page - 1))
@@ -125,7 +110,6 @@ class AdminController {
     try {
       const newProduct = {
         name: product?.name || "sample name" + Date.now(),
-        seller: req.headers.authorization?.split(" ")[2],
         slug: product?.slug || "sample-slug-" + Date.now(),
         category: product?.category || "sample category",
         price: product?.price || 0,
@@ -223,25 +207,9 @@ class AdminController {
 
   getOrdersList = async (req: Request, res: Response) => {
     try {
-      const sellerId = req.headers.authorization?.split(" ")[2];
-      const sellerStatus = req.headers.authorization?.split(" ")[4];
       const query = req.query;
       const page = Number(query.page) || 1;
       const pageSize = Number(query.pageSize) || 3;
-
-      if (sellerStatus) {
-        const count = await OrderModel.countDocuments({ seller: sellerId });
-        const orders = await OrderModel.find({ seller: sellerId });
-        console.log(sellerId, 'orders++++++++')
-        return orders.length > 0
-          ? res.status(200).send({
-              orders,
-              countDocuments: count,
-              page,
-              pages: Math.ceil(orders.length / pageSize),
-            })
-          : res.status(400).send("This seller has no orders");
-      }
 
       const orders = await OrderModel.find()
         .skip(pageSize * (page - 1))
@@ -310,12 +278,12 @@ class AdminController {
     const query = req.query;
     const page = Number(query.page) || 1;
     const pageSize = Number(query.pageSize) || 3;
+
     try {
       const users = await UserModel.find()
         .skip(pageSize * (page - 1))
         .limit(pageSize);
 
-      const countDocuments = await OrderModel.countDocuments();
 
       if (!users) {
         res.status(400).send("No products found in getProductList method");
@@ -323,9 +291,9 @@ class AdminController {
 
       res.status(200).send({
         users,
-        countDocuments,
+        countDocuments : users.length,
         page,
-        pages: Math.ceil(countDocuments / pageSize),
+        pages: Math.ceil(users.length / pageSize),
       });
     } catch (error) {
       if (error instanceof Error) {
@@ -373,11 +341,11 @@ class AdminController {
 
   editUser = async (req: Request, res: Response) => {
     const { id } = req.params;
-    const { name, email, isAdmin, isSeller } = req.body;
+    const { name, email, isAdmin } = req.body;
     try {
       const editedUser = await UserModel.findByIdAndUpdate(
         id,
-        { name, email, isAdmin, isSeller },
+        { name, email, isAdmin },
         { new: true }
       );
       if (!editedUser) {

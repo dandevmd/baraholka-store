@@ -31,7 +31,7 @@ const AdminProductListPage = () => {
         {
           headers: {
             Authorization:
-              user && `Bearer ${user.token} ${user._id} ${user.isAdmin} ${location.pathname ===  '/productList/seller' ? user.isSeller : ''}`,
+              user && `Bearer ${user.token} ${user._id} ${user.isAdmin} `,
           },
         }
       );
@@ -60,7 +60,7 @@ const AdminProductListPage = () => {
         {
           headers: {
             Authorization:
-              user && `Bearer ${user.token} ${user._id} ${user.isAdmin} ${user?.isSeller}`,
+              user && `Bearer ${user.token} ${user._id} ${user.isAdmin} `,
           },
         }
       );
@@ -91,7 +91,7 @@ const AdminProductListPage = () => {
         {
           headers: {
             Authorization:
-              user && `Bearer ${user.token} ${user._id} ${user.isAdmin} ${user?.isSeller}`,
+              user && `Bearer ${user.token} ${user._id} ${user.isAdmin} `,
           },
           data: { id },
         }
@@ -114,6 +114,7 @@ const AdminProductListPage = () => {
     setLoading(false);
   };
 
+  console.log(productsState.pages);
   return (
     <>
       {loading ? (

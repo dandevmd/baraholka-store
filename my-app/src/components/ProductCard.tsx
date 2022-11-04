@@ -28,15 +28,11 @@ const ProductCard = ({ product }: { product: Product }) => {
         </Link>
         <Rating rating={product.rating} numReviews={product.numReviews} />
         <Card.Text>{product.price} $</Card.Text>
-        {outOfStock ? (
+        {outOfStock && (
           <Button variant="secondary" disabled>
             Out of Stock
           </Button>
-        ) : (
-          <Link to={`/product/${product.slug}`} className="btn btn-warning">
-            Review
-          </Link>
-        )}
+        ) }
       </Card.Body>
     </div>
   );

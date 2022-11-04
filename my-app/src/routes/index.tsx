@@ -4,7 +4,6 @@ import {
   privateRoutes,
   publicRoutes,
   adminRoutes,
-  sellerRoutes,
 } from "./routes";
 import { useUserContext } from "../context/userContext";
 
@@ -21,12 +20,10 @@ const AppRouter = () => {
           return (document.title = "User List");
         case "/productList":
           return (document.title = "Product List");
-        case "/productList/seller":
-          return (document.title = "Seller Products");
+        
         case "/orderList":
           return (document.title = "Order List");
-        case "/orderList/seller":
-          return (document.title = "Seller Orders");
+      
         case "/cart":
           return (document.title = "Cart");
         case "/products/Pants":
@@ -62,11 +59,7 @@ const AppRouter = () => {
         adminRoutes.map((route: { path: string; element: JSX.Element }) => (
           <Route key={route.path} path={route.path} element={route.element} />
         ))}
-      {user &&
-        user.isSeller &&
-        sellerRoutes.map((route: { path: string; element: JSX.Element }) => (
-          <Route key={route.path} path={route.path} element={route.element} />
-        ))}
+      
     </Routes>
   );
 };

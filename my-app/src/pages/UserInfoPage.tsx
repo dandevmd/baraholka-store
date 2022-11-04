@@ -17,7 +17,6 @@ const UserInfoPage = () => {
     name: "",
     email: "",
     isAdmin: false,
-    isSeller: false,
     
   });
 
@@ -42,7 +41,6 @@ const UserInfoPage = () => {
           name: data.name,
           email: data.email,
           isAdmin: data.isAdmin,
-          isSeller: data.isSeller,
           
           
         });
@@ -66,7 +64,7 @@ const UserInfoPage = () => {
         {
           headers: {
             Authorization:
-              user && `Bearer ${user.token} ${user._id} ${user.isAdmin} ${user.isSeller}`,
+              user && `Bearer ${user.token} ${user._id} ${user.isAdmin} `,
           },
         }
       );
@@ -123,16 +121,7 @@ const UserInfoPage = () => {
                 setUserInfo({ ...userInfo, isAdmin: e.target.checked })
               }
             />
-            <Form.Check
-              className="mb-3"
-              type="checkbox"
-              id="isSeller"
-              label="isSeller"
-              checked={userInfo.isSeller}
-              onChange={(e) =>
-                setUserInfo({ ...userInfo, isSeller: e.target.checked })
-              }
-            />
+           
             
             <div className="mb-3">
               <Button type="submit">Update</Button>

@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import { productController } from "../controllers/productController";
-import { verifyToken, verifyAdmin, verifySeller } from "../middlewares/isAuth";
+import { verifyToken, verifyAdmin,  } from "../middlewares/isAuth";
 const productRouter = Router();
 
 productRouter.get("/", productController.getAllProducts);
@@ -14,7 +14,7 @@ productRouter.get("/search", productController.getProductByQuery);
 productRouter.get(
   "/:id",
   verifyToken,
-  verifySeller || verifyAdmin,
+   verifyAdmin,
   productController.getProductById
 );
 productRouter.post(

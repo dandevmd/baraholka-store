@@ -82,25 +82,10 @@ class AdminController {
             }
         });
         this.getProductList = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            var _a, _b;
             try {
-                const sellerId = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(" ")[2];
-                const sellerStatus = (_b = req.headers.authorization) === null || _b === void 0 ? void 0 : _b.split(" ")[4];
                 const query = req.query;
                 const page = Number(query.page) || 1;
                 const pageSize = Number(query.pageSize) || 3;
-                if (sellerStatus) {
-                    const count = yield productModel_1.default.countDocuments({ seller: sellerId });
-                    const products = yield productModel_1.default.find({ seller: sellerId });
-                    return products.length > 0
-                        ? res.status(200).send({
-                            products,
-                            countDocuments: count,
-                            page,
-                            pages: Math.ceil(products.length / pageSize),
-                        })
-                        : res.status(400).send("This seller has no products");
-                }
                 const products = yield productModel_1.default.find()
                     .skip(pageSize * (page - 1))
                     .limit(pageSize);
@@ -124,12 +109,10 @@ class AdminController {
             }
         });
         this.createNewProduct = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            var _c;
             const { product } = req.body;
             try {
                 const newProduct = {
                     name: (product === null || product === void 0 ? void 0 : product.name) || "sample name" + Date.now(),
-                    seller: (_c = req.headers.authorization) === null || _c === void 0 ? void 0 : _c.split(" ")[2],
                     slug: (product === null || product === void 0 ? void 0 : product.slug) || "sample-slug-" + Date.now(),
                     category: (product === null || product === void 0 ? void 0 : product.category) || "sample category",
                     price: (product === null || product === void 0 ? void 0 : product.price) || 0,
@@ -206,26 +189,10 @@ class AdminController {
             }
         });
         this.getOrdersList = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            var _d, _e;
             try {
-                const sellerId = (_d = req.headers.authorization) === null || _d === void 0 ? void 0 : _d.split(" ")[2];
-                const sellerStatus = (_e = req.headers.authorization) === null || _e === void 0 ? void 0 : _e.split(" ")[4];
                 const query = req.query;
                 const page = Number(query.page) || 1;
                 const pageSize = Number(query.pageSize) || 3;
-                if (sellerStatus) {
-                    const count = yield orderModel_1.default.countDocuments({ seller: sellerId });
-                    const orders = yield orderModel_1.default.find({ seller: sellerId });
-                    console.log(sellerId, 'orders++++++++');
-                    return orders.length > 0
-                        ? res.status(200).send({
-                            orders,
-                            countDocuments: count,
-                            page,
-                            pages: Math.ceil(orders.length / pageSize),
-                        })
-                        : res.status(400).send("This seller has no orders");
-                }
                 const orders = yield orderModel_1.default.find()
                     .skip(pageSize * (page - 1))
                     .limit(pageSize);
@@ -291,15 +258,14 @@ class AdminController {
                 const users = yield userModel_1.default.find()
                     .skip(pageSize * (page - 1))
                     .limit(pageSize);
-                const countDocuments = yield orderModel_1.default.countDocuments();
                 if (!users) {
                     res.status(400).send("No products found in getProductList method");
                 }
                 res.status(200).send({
                     users,
-                    countDocuments,
+                    countDocuments: users.length,
                     page,
-                    pages: Math.ceil(countDocuments / pageSize),
+                    pages: Math.ceil(users.length / pageSize),
                 });
             }
             catch (error) {
@@ -348,9 +314,9 @@ class AdminController {
         });
         this.editUser = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const { name, email, isAdmin, isSeller } = req.body;
+            const { name, email, isAdmin } = req.body;
             try {
-                const editedUser = yield userModel_1.default.findByIdAndUpdate(id, { name, email, isAdmin, isSeller }, { new: true });
+                const editedUser = yield userModel_1.default.findByIdAndUpdate(id, { name, email, isAdmin }, { new: true });
                 if (!editedUser) {
                     res.status(400).send("Error editing user in editUser method");
                 }

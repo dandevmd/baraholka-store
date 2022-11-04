@@ -97,13 +97,3 @@ export const adminRoutes = [
   },
 ];
 
-export const sellerRoutes = [
-  {
-    path: "/productList/seller",
-    element: <AdminProductListPage />,
-  },
-  {
-    path: "/orderList/seller",
-    element: <AdminOrdersListPage />,
-  },
-];

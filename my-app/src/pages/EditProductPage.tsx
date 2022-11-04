@@ -36,7 +36,7 @@ const EditProductPage = () => {
         `${process.env.REACT_APP_API}/products/${id}`, {
           headers: {
             Authorization:
-              user && `Bearer ${user.token} ${user._id} ${user.isAdmin} ${user.isSeller}`,
+              user && `Bearer ${user.token} ${user._id} ${user.isAdmin} `,
           },
         }
       );

@@ -7,7 +7,6 @@ export const verifyToken = (
   next: NextFunction
 ) => {
   const token = req.headers.authorization?.split(" ")[1];
-  // console.log(token, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
   if (!token) {
     res.status(401).send("Access Denied");
     return next();
@@ -29,7 +28,6 @@ export const verifyAdmin = (
   next: NextFunction
 ) => {
   const adminField = req.headers.authorization?.split(" ")[3];
-  console.log(adminField, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
   if (adminField === "true") {
     next();
   } else {
@@ -37,16 +35,4 @@ export const verifyAdmin = (
   }
 };
 
-export const verifySeller = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const sellerField = req.headers.authorization?.split(" ")[4];
-  // console.log(sellerField, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-  if (sellerField === "true") {
-    next();
-  } else {
-    res.status(401).send("Access Denied. Do not have seller privileges");
-  }
-}
+

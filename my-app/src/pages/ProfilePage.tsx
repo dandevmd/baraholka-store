@@ -15,12 +15,6 @@ const ProfilePage = () => {
     email: user.email || "",
     password: "",
     confirmPassword: "",
-    isSeller: user.isSeller || false,
-    seller: {
-      name: user?.seller?.name || "",
-      logo: user?.seller?.logo || "",
-      description: user?.seller?.description || "",
-    },
   });
 
   const validateForm = () => {
@@ -33,25 +27,24 @@ const ProfilePage = () => {
       toast.error("Name and email are required");
       return false;
     }
-    
 
     return true;
   };
 
   const onSubmitHandler = async (e: React.FocusEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
 
-    const { name, email, password, seller } = form;
+    const { name, email, password } = form;
     try {
       dispatch({ type: "UPDATE_USER_REQUEST" });
       const { data } = await axios.put(
         `${process.env.REACT_APP_API}/user/update`,
-        { name, email, password: password, seller },
+        { name, email, password: password },
         {
           headers: {
-            Authorization: `Bearer ${user.token} ${user._id} ${user.isAdmin} ${user.isSeller}`,
+            Authorization: `Bearer ${user.token} ${user._id} ${user.isAdmin} `,
           },
         }
       );
@@ -117,55 +110,7 @@ const ProfilePage = () => {
               }
             />
           </FormGroup>
-          {user && user.isSeller && (
-            <>
-              <FormGroup className="my-3">
-                <Form.Label>Seller Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={form.seller.name}
-                  id="sellerName"
-                  onChange={(e) =>
-                    setForm({
-                      ...form,
-                      seller: { ...form.seller, name: e.target.value },
-                    })
-                  }
-                />
-              </FormGroup>{" "}
-              <FormGroup className="my-3">
-                <Form.Label>Seller Logo</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={form.seller.logo}
-                  id="sellerLogo"
-                  onChange={(e) =>
-                    setForm({
-                      ...form,
-                      seller: { ...form.seller, logo: e.target.value },
-                    })
-                  }
-                />
-              </FormGroup>{" "}
-              <FormGroup className="my-3">
-                <Form.Label>Seller Description</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={form.seller.description}
-                  id="sellerDescription"
-                  onChange={(e) =>
-                    setForm({
-                      ...form,
-                      seller: {
-                        ...form.seller,
-                        description: e.target.value,
-                      },
-                    })
-                  }
-                />
-              </FormGroup>
-            </>
-          )}
+          
           <div className="d-flex flex-row justify-content-between">
             <div>
               <Button type="submit" className="btn btn-danger">
